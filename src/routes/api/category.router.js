@@ -7,7 +7,7 @@ const CategoryController = require('../../controllers/Category.controller');
 
 const JWT_MIDDLEWARE = require('../middleware/jwt.middlware');
 
-const httpCode = require('../../config/httpCodes');
+const httpStatus = require('../../config/httpStatus');
 
 /**
  * @route /api/v{api_version}/categories
@@ -17,14 +17,14 @@ const httpCode = require('../../config/httpCodes');
  */
 CategoryRouter.get('/', (request, response) => {
     CategoryController.getCategories().then(categories => {
-        response.status(httpCode.OK).json({
-            status: httpCode.OK,
+        response.status(httpStatus.OK).json({
+            status: httpStatus.OK,
             message: 'Action successfully completed.',
             data: categories
         });
     }).catch(err => {
-        response.status(httpCode.INTERNAL_SERVER_ERROR).json({
-            status: httpCode.INTERNAL_SERVER_ERROR,
+        response.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            status: httpStatus.INTERNAL_SERVER_ERROR,
             message: err.message,
             data: []
         });
@@ -40,21 +40,21 @@ CategoryRouter.get('/', (request, response) => {
 CategoryRouter.get('/:id', (request, response) => {
     CategoryController.getCategory(request.params.id).then(category => {
         if (category) {
-            response.status(httpCode.OK).json({
-                status: httpCode.OK,
+            response.status(httpStatus.OK).json({
+                status: httpStatus.OK,
                 message: 'Action successfully completed.',
                 data: category
             });
         } else {
-            response.status(httpCode.NOT_FOUND).json({
-                status: httpCode.NOT_FOUND,
+            response.status(httpStatus.NOT_FOUND).json({
+                status: httpStatus.NOT_FOUND,
                 message: 'Resource not found.',
                 data: {}
             });
         }
     }).catch(err => {
-        response.status(httpCode.INTERNAL_SERVER_ERROR).json({
-            status: httpCode.INTERNAL_SERVER_ERROR,
+        response.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            status: httpStatus.INTERNAL_SERVER_ERROR,
             message: err.message,
             data: []
         });
@@ -85,14 +85,14 @@ CategoryRouter.all('*', JWT_MIDDLEWARE);
  */
 CategoryRouter.post('/', (request, response) => {
     CategoryController.createCategory(request.body).then(category => {
-        response.status(httpCode.CREATED).json({
-            status: httpCode.CREATED,
+        response.status(httpStatus.CREATED).json({
+            status: httpStatus.CREATED,
             message: 'Resource successfully created.',
             data: category
         });
     }).catch(err => {
-        response.status(httpCode.INTERNAL_SERVER_ERROR).json({
-            status: httpCode.INTERNAL_SERVER_ERROR,
+        response.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            status: httpStatus.INTERNAL_SERVER_ERROR,
             message: err.message,
             data: []
         });
@@ -108,15 +108,15 @@ CategoryRouter.post('/', (request, response) => {
 CategoryRouter.put('/:id', (request, response) => {
     CategoryController.updateCategory(request.params.id, request.body)
         .then(category => {
-            response.status(httpCode.OK).json({
-                status: httpCode.OK,
+            response.status(httpStatus.OK).json({
+                status: httpStatus.OK,
                 message: 'Resource successfully updated.',
                 data: category
             });
         })
         .catch(err => {
-            response.status(httpCode.INTERNAL_SERVER_ERROR).json({
-                status: httpCode.INTERNAL_SERVER_ERROR,
+            response.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                status: httpStatus.INTERNAL_SERVER_ERROR,
                 message: err.message,
                 data: []
             });
@@ -131,14 +131,14 @@ CategoryRouter.put('/:id', (request, response) => {
  */
 CategoryRouter.delete('/:id', (request, response) => {
     CategoryController.deleteCategory(request.params.id).then(() => {
-        response.status(httpCode.OK).json({
-            status: httpCode.OK,
+        response.status(httpStatus.OK).json({
+            status: httpStatus.OK,
             message: 'Resource successfully deleted.',
             data: {}
         });
     }).catch(err => {
-        response.status(httpCode.INTERNAL_SERVER_ERROR).json({
-            status: httpCode.INTERNAL_SERVER_ERROR,
+        response.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            status: httpStatus.INTERNAL_SERVER_ERROR,
             message: err.message,
             data: []
         });

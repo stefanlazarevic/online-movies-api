@@ -6,7 +6,7 @@ const MovieController = require('../../controllers/Movie.controller');
 
 const JWT_MIDDLEWARE = require('../middleware/jwt.middlware');
 
-const httpCode = require('../../config/httpCodes');
+const httpStatus = require('../../config/httpStatus');
 
 /**
  * @route /api/v{version_number}/movies
@@ -17,15 +17,15 @@ const httpCode = require('../../config/httpCodes');
 MovieRouter.get('/', (request, response) => {
     MovieController.getMovies()
         .then(movies => {
-            response.status(httpCode.OK).json({
-                status: httpCode.OK,
+            response.status(httpStatus.OK).json({
+                status: httpStatus.OK,
                 message: 'Action successfully completed.',
                 data: movies
             });
         })
         .catch(err => {
-            response.status(httpCode.INTERNAL_SERVER_ERROR).json({
-                status: httpCode.INTERNAL_SERVER_ERROR,
+            response.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                status: httpStatus.INTERNAL_SERVER_ERROR,
                 message: err.message,
                 data: []
             });
@@ -43,23 +43,23 @@ MovieRouter.get('/:id', (request, response) => {
     MovieController.getMovie(request.params.id)
         .then(movie => {
             if (movie) {
-                response.status(httpCode.OK).json({
-                    status: httpCode.OK,
+                response.status(httpStatus.OK).json({
+                    status: httpStatus.OK,
                     message: 'Action successfully completed.',
                     data: movie,
                 });
             } else {
                 console.log('ok');
-                response.status(httpCode.NOT_FOUND).json({
-                    status: httpCode.NOT_FOUND,
+                response.status(httpStatus.NOT_FOUND).json({
+                    status: httpStatus.NOT_FOUND,
                     message: 'Resource not found.',
                     data: {}
                 });
             }
         })
         .catch(err => {
-            response.status(httpCode.INTERNAL_SERVER_ERROR).json({
-                status: httpCode.INTERNAL_SERVER_ERROR,
+            response.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                status: httpStatus.INTERNAL_SERVER_ERROR,
                 message: err.message,
                 data: []
             });
@@ -80,15 +80,15 @@ MovieRouter.all('*', JWT_MIDDLEWARE);
 MovieRouter.post('/', (request, response) => {
     MovieController.createMovie(request.body)
         .then(movie => {
-            response.status(httpCode.OK).json({
-                status: httpCode.OK,
+            response.status(httpStatus.OK).json({
+                status: httpStatus.OK,
                 message: 'Resource successfully created.',
                 data: movie
             });
         })
         .catch(err => {
-            response.status(httpCode.INTERNAL_SERVER_ERROR).json({
-                status: httpCode.INTERNAL_SERVER_ERROR,
+            response.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                status: httpStatus.INTERNAL_SERVER_ERROR,
                 message: err.message,
                 data: []
             });
@@ -105,22 +105,22 @@ MovieRouter.put('/:id', (request, response) => {
     MovieController.updateMovie(request.params.id)
         .then(movie => {
             if (movie) {
-                response.status(httpCode.OK).json({
-                    status: httpCode.OK,
+                response.status(httpStatus.OK).json({
+                    status: httpStatus.OK,
                     message: 'Resource successfully updated.',
                     data: movie,
                 });
             } else {
-                response.status(httpCode.NOT_FOUND).json({
-                    status: httpCode.NOT_FOUND,
+                response.status(httpStatus.NOT_FOUND).json({
+                    status: httpStatus.NOT_FOUND,
                     message: 'Resource not found.',
                     data: {}
                 });
             }
         })
         .catch(err => {
-            response.status(httpCode.INTERNAL_SERVER_ERROR).json({
-                status: httpCode.INTERNAL_SERVER_ERROR,
+            response.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                status: httpStatus.INTERNAL_SERVER_ERROR,
                 message: err.message,
                 data: []
             });
@@ -136,15 +136,15 @@ MovieRouter.put('/:id', (request, response) => {
 MovieRouter.delete('/:id', (request, response) => {
     MovieController.deleteMovie(request.params.id)
         .then(() => {
-            response.status(httpCode.OK).json({
-                status: httpCode.OK,
+            response.status(httpStatus.OK).json({
+                status: httpStatus.OK,
                 message: 'Resource successfully deleted.',
                 data: {}
             });
         })
         .catch(err => {
-            response.status(httpCode.INTERNAL_SERVER_ERROR).json({
-                status: httpCode.INTERNAL_SERVER_ERROR,
+            response.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                status: httpStatus.INTERNAL_SERVER_ERROR,
                 message: err.message,
                 data: []
             });
